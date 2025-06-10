@@ -16,7 +16,6 @@ public class FetchXmlToJsonService {
         String xmlResponse = apiClient.fetchData(url);
 
         XmlMapper xmlMapper = new XmlMapper();
-
         Object xmlObject = xmlMapper.readValue(xmlResponse, Object.class);
 
         ObjectMapper jsonMapper = new ObjectMapper();
