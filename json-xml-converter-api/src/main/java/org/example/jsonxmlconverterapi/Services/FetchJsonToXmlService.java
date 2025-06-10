@@ -1,6 +1,7 @@
 package org.example.jsonxmlconverterapi.Services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -14,30 +15,19 @@ public class FetchJsonToXmlService {
 
     public String transformJsonFetchToXml() throws JsonProcessingException {
 
-            String jsonResponse = apiClient.fetchData(url);
+        String jsonResponse = apiClient.fetchData(url);
 
-            ObjectMapper jsonMapper = new ObjectMapper();
+        ObjectMapper jsonMapper = new ObjectMapper();
+        JsonNode jsonNode = jsonMapper.readTree(jsonResponse); // Parse JSON
 
-            Object jsonObject = jsonMapper.convertValue(jsonResponse, Object.class);
+        XmlMapper xmlMapper = new XmlMapper();
+        xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-            XmlMapper xmlMapper = new XmlMapper();
-            xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        // Convert JSON node to XML string
+        String xmlContent = xmlMapper.writeValueAsString(jsonNode);
 
-            StringBuilder xmlOutput = new StringBuilder();
-            xmlOutput.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            xmlOutput.append("<users>");
-
-            String xmlContent = xmlMapper.writeValueAsString(jsonObject);
-
-            if (xmlContent.startsWith("<?xml")) {
-                int endOfDeclaration = xmlContent.indexOf("?>");
-                xmlContent = xmlContent.replace("<ArrayList>", "").replace("</ArrayList>", "");
-            }
-
-            xmlOutput.append(xmlContent);
-            xmlOutput.append("</users>");
-
-            return xmlOutput.toString();
+        // Optionally add XML declaration
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + xmlContent;
         }
-    }
+}
 
