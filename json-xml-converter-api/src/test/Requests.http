@@ -1,0 +1,39 @@
+### Convert JSON to XML
+POST http://localhost:8080/convert/json-to-xml
+Content-Type: application/json
+Accept: application/xml
+
+{
+  "name": "Alice",
+  "age": 30
+}
+
+###
+
+### Convert XML to JSON
+POST http://localhost:8080/convert/xml-to-json
+Content-Type: application/xml
+Accept: application/json
+
+<user>
+    <name>Alice</name>
+    <age>30</age>
+</user>
+
+###
+
+### Fetch JSON from URL and convert to XML
+POST http://localhost:8080/convert/fetch-json-to-xml
+Content-Type: text/plain
+Accept: application/xml
+
+https://jsonplaceholder.typicode.com/users/1
+
+###
+
+### Fetch XML from URL and convert to JSON
+POST http://localhost:8080/convert/fetch-xml-to-json
+Content-Type: text/plain
+Accept: application/json
+
+https://www.w3schools.com/xml/simple.xml

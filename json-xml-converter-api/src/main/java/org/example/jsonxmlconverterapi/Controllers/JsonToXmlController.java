@@ -36,13 +36,13 @@ public class JsonToXmlController {
         }
     }
 
-    @GetMapping(value = "/fetch-json-to-xml", produces = MediaType.APPLICATION_XML_VALUE)
+    @PostMapping(value = "/fetch-json-to-xml", consumes = MediaType.TEXT_PLAIN_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
     @Operation(summary = "Fetch JSON from a specific URL and convert to XML")
     @ApiResponse(responseCode = "200", description = "Conversion successful")
     @ApiResponse(responseCode = "400", description = "Conversion failed")
-    public ResponseEntity<String> fetchJsonToXml() {
+    public ResponseEntity<String> fetchJsonToXml(@RequestBody String url) {
         try {
-            String xml = fetchJsonToXmlService.transformJsonFetchToXml();
+            String xml = fetchJsonToXmlService.transformJsonFetchToXml(url);
             return ResponseEntity.ok(xml);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("<error>Conversion failed</error>");

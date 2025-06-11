@@ -9,10 +9,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FetchXmlToJsonService {
-    private static final String url = "https://www.w3schools.com/xml/simple.xml";
     private static final ApiClient apiClient = new ApiClient();
 
-    public String transformXmlFetchToJson() throws JsonProcessingException {
+    public String transformXmlFetchToJson(String url) throws JsonProcessingException {
         String xmlResponse = apiClient.fetchData(url);
 
         XmlMapper xmlMapper = new XmlMapper();

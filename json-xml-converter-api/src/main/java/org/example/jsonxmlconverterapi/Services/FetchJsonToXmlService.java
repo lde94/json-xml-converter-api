@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FetchJsonToXmlService {
-    private static final String url = "https://jsonplaceholder.typicode.com/users/1";
+
     private static final ApiClient apiClient = new ApiClient();
 
-    public String transformJsonFetchToXml() throws JsonProcessingException {
+    public String transformJsonFetchToXml(String url) throws JsonProcessingException {
 
         String jsonResponse = apiClient.fetchData(url);
 
